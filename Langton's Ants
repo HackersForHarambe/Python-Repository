@@ -4,13 +4,13 @@ import math as m
 import time as t
 
 
-win = ( 1440, 900)
+win = ( 1440, 900)  #This list designates the window size
 
-iters = 1000000
+iters = 1000000     #This is how many frames the ant will go through before the program stops
 
-AntCount = 700
+AntCount = 700      #This is just how many ants there will be at first. Each is offset by 2 pixels
 
-BLACK = (0, 0, 0)
+BLACK = (0, 0, 0)   #These are to define colors for later
 RED = (255, 0, 0)
 BLUE = (0, 255, 255)
 YELLOW = (0, 0, 255)
@@ -19,19 +19,30 @@ GREEN = (0, 255, 0)
 ORANGE = (255, 0, 255)
 WHITE = (255, 255, 255)
 
-py.init()
-LangtonSurface = py.display.set_mode(win, 0, 32)
-py.display.set_caption('Langton Ant')
 
-LangtonSurface.fill(BLACK)
+py.init()                                               #py.init initializes pygame, which I use later to draw the screen
+LangtonSurface = py.display.set_mode(win, 0, 32)        #This will define the surface I draw on
+py.display.set_caption('Langton Ant')                   #Sets the title of the window to Langton Ant
 
-PixelList = [[0 for i1 in range(win[1])] for i2 in range(win[0])]
+LangtonSurface.fill(BLACK)                              #Starts the window with a black screen
+
+PixelList = [[0 for i1 in range(win[1])] for i2 in range(win[0])]           #Creates a 2 dimensional list of values for every pixel; this will contain the values for color of each pixel
 
 Ants = [[[int(win[0] / 2) + iants * 2 - AntCount, int(win[1] / 2)], [1,0]] for iants in range(AntCount + 1)]
 
-Directions = [1 , -1, -1]
+"""To create Ants, Ants have 2 components; a location and a direction they are facing. Ants are therefore defined as a list with 2 components;
+they look like this: Ant = [ [X-Coordinate, Y-Coordinate], [X-Direction, Y-Direction] ]
+Ant[0] => [X-Coordinate, Y-Coordinate]
+Ant[1] => [X-Direction, Y-Direction]
+However, the Ants variable I've defined is actually a list containing ants (Lists in lists in lists), this allows me to just go
+through each ant and move it by going through each component of the list of Ants. This is done with a for-loop"""
 
-Colors = [GREEN, RED]
+Directions = [1 , -1, -1]       #These are the instructions for my ants; it tells the ant which direction to turn based on the pixel it's over
+
+Colors = [GREEN, RED, BLUE]     #This is the color palette for my pixels        
+
+
+#This next part is the more complicated part; I will hopefully explain this in a meeting; the next part moves the ants, changes the colors, and draws the screen
 
 for FrameCount in range(0, iters):
     for i in range(AntCount + 1):
